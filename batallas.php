@@ -7,6 +7,15 @@ if (!empty($_POST["reporte"])) {
         unset($data[0]);
     }
 
+    foreach ($data as $k => $d) {
+        if(trim($d) == "") {
+            unset($data[$k]);
+        } else {
+            break;
+        }
+    }
+
+    $data = array_values($data);
     $parsedData = array();
     $i = 0;
     $j = 0;
@@ -126,7 +135,7 @@ if (!empty($_POST["reporte"])) {
     if ($winner !== false) {
         $bbcode .= "\n[b]".$winner." ha ganado la batalla![/b]";
 
-        if (!empty($recursos)) {
+        if (!empty($recursos) && $winner == $players[0]) {
             $bbcode .= "\n".trim($recursos[0]).": [b][color=blue]".trim($armas[1])."[/color][/b] ".trim($armas[0]).", ";
             $bbcode .= "[b][color=blue]".trim($municion[1])."[/color][/b] ".trim($municion[0]).", ";
             $bbcode .= "[b][color=blue]".trim($alcohol[1])."[/color][/b] ".trim($alcohol[0]).", ";
@@ -165,7 +174,7 @@ if (!empty($_POST["reporte"])) {
 
         <div class="form-group">
             <label class="control-label">Copia y pega aquí debajo el reporte de la batalla</label>
-            <textarea class="form-control" rows="10" name="reporte"></textarea>
+            <textarea class="form-control" rows="20" name="reporte"></textarea>
         </div>
         <button class="btn btn-primary">Enviar</button>
     </form>
