@@ -113,6 +113,8 @@ class CombatParser {
             }
         }
 
+        array_walk($recursos, function(&$t){$t = explode("\t", trim($t));});
+
         $params = array(
             "date" => trim($data[1]),
             "rondas" => $rondas,
@@ -145,18 +147,18 @@ class CombatParser {
         } else {
             $bbcode .= "[b]Ninguna tropa[/b]\n";
         }
-        $armas = explode("\t", $params["recursos"][1]);
-        $municion = explode("\t", $params["recursos"][2]);
-        $alcohol = explode("\t", $params["recursos"][3]);
-        $dolares = explode("\t", $params["recursos"][4]);
+        $armas = $params["recursos"][1];
+        $municion = $params["recursos"][2];
+        $alcohol = $params["recursos"][3];
+        $dolares = $params["recursos"][4];
 
         $winner = $this->getWinner($params["tropas"], $params["players"][0], $params["players"][1]);
 
         if ($winner !== false) {
             $bbcode .= "\n[b]".$winner." ha ganado la batalla![/b]";
 
-            if (!empty($recursos) && $winner == $params["players"][0]) {
-                $bbcode .= "\n".trim($params["recursos"][0]).": [b][color=blue]".trim($armas[1])."[/color][/b] ".trim($armas[0]).", ";
+            if (!empty($params["recursos"]) && $winner == $params["players"][0]) {
+                $bbcode .= "\n".trim($params["recursos"][0][0]).": [b][color=blue]".trim($armas[1])."[/color][/b] ".trim($armas[0]).", ";
                 $bbcode .= "[b][color=blue]".trim($municion[1])."[/color][/b] ".trim($municion[0]).", ";
                 $bbcode .= "[b][color=blue]".trim($alcohol[1])."[/color][/b] ".trim($alcohol[0]).", ";
                 $bbcode .= "[b][color=blue]".trim($dolares[1])."[/color][/b] ".trim($dolares[0]);
