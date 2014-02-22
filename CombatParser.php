@@ -37,6 +37,7 @@ class CombatParser {
         $data = explode("\n", trim($reporte));
 
         if(preg_match('/^\d{1,3}:\d{1,3}:\d{1,3}/', $data[0])) {
+            // si empieza con xx:xx:xx Informe de Batalla ... esta linea hay que eliminarla
             unset($data[0]);
         }
 
@@ -49,6 +50,10 @@ class CombatParser {
         }
 
         $data = array_values($data);
+
+        preg_match_all('/\d{1,3}:\d{1,3}:\d{1,3}/', $data[0], $coordenadas);
+        if($coordenadas) $coordenadas = $coordenadas[0];
+
         $parsedData = array();
         $i = 0;
         $j = 0;
@@ -64,12 +69,12 @@ class CombatParser {
 
         $recursos = array();
         if (sizeof($parsedData[sizeof($parsedData)-1]) == 1) {
-            $recursos = reset(array_pop($parsedData));
+            $recursos = @reset(array_pop($parsedData));
         }
         $rondas = sizeof($parsedData);
 
         $players = array_map(function($i){
-            return end(explode("(", $i));
+            return @end(explode("(", $i));
         }, explode(")", $data[0]));
 
         $tropas = array();
@@ -117,6 +122,7 @@ class CombatParser {
 
         $params = array(
             "date" => trim($data[1]),
+            "coordenadas" => $coordenadas,
             "rondas" => $rondas,
             "players" => $players,
             "tropas" => $tropas,
