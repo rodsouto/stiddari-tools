@@ -8,10 +8,12 @@
     if (!empty($_POST["vision-global"])) {
         $data = explode("\n", trim($_POST["vision-global"]));
 
-        $armas = getTotal($data[22]);
-        $municion = getTotal($data[23]);
-        $alcohol = getTotal($data[24]);
-        $dolares = getTotal($data[25]);
+        $totalRows = sizeof($data);
+
+        $armas = getTotal($totalRows == 4 ? $data[0] : $data[22]);
+        $municion = getTotal($totalRows == 4 ? $data[1] : $data[23]);
+        $alcohol = getTotal($totalRows == 4 ? $data[2] : $data[24]);
+        $dolares = getTotal($totalRows == 4 ? $data[3] : $data[25]);
 
         ?>
             <h3>Producción diaria</h3>
@@ -25,6 +27,7 @@
     } else {
 ?>
 
+    <p class="text-center"><img src="/img/produccion.png" /></p>
     <form method="post">
 
         <div class="form-group">

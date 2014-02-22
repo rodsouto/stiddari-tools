@@ -4,8 +4,17 @@ runtime: php
 api_version: 1
 
 handlers:
+- url: /img
+  static_dir: img
+
 - url: /css
   static_dir: css
+
+- url: /js
+  static_dir: js
+
+- url: /swf
+  static_dir: swf
 
 - url: /.*
   script: index.php
