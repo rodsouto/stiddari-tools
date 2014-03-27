@@ -1,12 +1,17 @@
 <?php
 
+include "vendor/autoload.php";
 include_once "CombatParser.php";
 
 if (!empty($_POST["reporte"])) {
 
     $parser = new CombatParser();
+
+    foreach ($parser->getBbCode($_POST["reporte"]) as $lang => $bbcode) {
+        echo "<h3>Language: ".strtoupper($lang)."</h3>";
+        echo "<pre>$bbcode</pre>";
+    }
     ?>
-    <pre><?php echo $parser->getBbCode($_POST["reporte"]);?></pre>
 <?php
 } else {
     ?>

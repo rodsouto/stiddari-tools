@@ -1,0 +1,11 @@
+{
+    "require": {
+        "vendetta-plus/vendetta-plus": "dev-master"
+    },
+    "repositories": [
+        {
+            "url": "https://github.com/vendetta-plus/vendetta-plus.git",
+            "type": "git"
+        }
+    ]
+}
